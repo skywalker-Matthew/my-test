@@ -7,6 +7,7 @@
 > 注意：
 >
 > - 以下参考资料大部分为简体中文，但部分官方中文文档可能存在过于明显的翻译腔、少数不准确翻译及过时问题，有能力的同学应切换到英文文档进行学习和参考。
+>
 > - 文档仅作为参考，是一次性通读还是遇到问题再进行查阅，需要同学们权衡。
 
 ## 目录
@@ -31,11 +32,13 @@
 ### Node.js 与 NPM
 
 > 现代 JavaScript 除了运行在浏览器上之外，还往往跑在一个 JavaScript 运行时环境中，称为 Node。Node 使用了与 Chrome 相同的 V8 JavaScript 引擎，使得 JavaScript 的运行不再需要浏览器环境。
+>
 > Node.js 是现代前端与后端运行的基础。
 
 无需深入了解 Node.js，但要在前后端的实践中大致了解它的作用。
 
 > NPM 是 `Node Package Manager` 的缩写，即 Node.js 包管理系统，类似 Python 的 pip 和 Debian 的 apt，它使得引入其他库变得简单。
+>
 > NPM 中的包大部分都是由 JavaScript 编写，我们可以通过 NPM 向自己的 JavaScript 项目引入其他人编写的代码，从而避免造轮子。
 
 通过[示例项目](https://github.com/eesast/sast-weekly-web)了解 `package.json` 的大致模样及引入的 NPM 是如何在项目中被使用的。
@@ -43,6 +46,7 @@
 ### TypeScript
 
 > JavaScript 是一个不具有强类型的动态语言，这赋予了它极大的灵活性，但也带来了开发和生产上可能存在的问题。TypeScript 是 JavaScript 的超集，使得 JavaScript 中的每一个变量和函数都具有和 C 一样的类型定义。你可以利用 TypeScript 在编译期进行类型检查，提前发现错误。
+>
 > TypeScript 是前端与后端的默认语言
 
 请先了解 JavaScript 语法，再看[示例项目](https://github.com/eesast/sast-api)，你会发现他们没有本质的不同。
