@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+    </head>
+    <style type="text/css">
+        #clickBtn {
+            height: 20px;
+            width: 50px;
+            margin: 200px 200px;
+        }
+    </style>
+    <body>
+        <button id="clickBtn">0</button>
+    </body>
+    <script>
+        var tot = 0;
+        var btn = document.getElementById("clickBtn");
+        btn.addEventListener("click", function () {
+            btn.innerHTML = tot + 1;
+            tot = tot + 1;
+            console.log(tot);
+        });
+
+    </script>
+</html>
