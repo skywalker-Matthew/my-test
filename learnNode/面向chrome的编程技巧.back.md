@@ -81,7 +81,7 @@ const add2 = (a, b) => {
   return a + b;
 };
 //箭头函数的省略写法
-const add3 = (a, b) = a + b;
+const add3 = (a, b) => a + b;
 
 console.log(add(1, 3)); //expect 4
 console.log(add2(2, 3)); //expect 5
@@ -101,7 +101,7 @@ const a = 10;
 const counter = (x = 1) => {
   console.log(x);
   if (x < a)
-    setTimeout(() = {
+    setTimeout(() => {
       counter(x + 1);
     }, 300);
 };
@@ -142,7 +142,7 @@ module.exports => { get, set };
 ```javascript
 //a.js
 const db = require("./db");
-const chga = () = {
+const chga = () => {
   db.set("letter", "a");
 };
 module.exports = chga;
@@ -150,7 +150,8 @@ module.exports = chga;
 
 ```javascript
 //b.js
-const chgb = () = {
+const db = require("./db");
+const chgb = () => {
   db.set("letter", "a");
 };
 module.exports = chgb;
@@ -161,7 +162,7 @@ const db = require("./db");
 const b = require("./b");
 const a = require("./a");
 //index.js
-const main = () = {
+const main = () => {
   a();
   console.log(db.get("letter"));
   b();

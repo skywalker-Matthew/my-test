@@ -7,7 +7,7 @@ const add2 = (a, b) => {
   return a + b;
 };
 //箭头函数的省略写法
-const add3 = (a, b) = a + b;
+const add3 = (a, b) => a + b;
 
 console.log(add(1, 3)); //expect 4
 console.log(add2(2, 3)); //expect 5
