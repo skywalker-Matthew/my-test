@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>A DEMO</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/css/all.css" />
+    <link rel="icon" href="/favicon.png" type="image/x-icon" />
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Material Design Bootstrap -->
+    <link href="css/mdb.min.css" rel="stylesheet" />
+    <!-- Your custom styles (optional) -->
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Start your project here-->
+    <div style="height: 100vh">
+      <div id="t1t" class="flex-center flex-column text-center">
+        <div class="col-md-8 col-lg-6">
+          <div class="card">
+            <h2 class="card-header info-color white-text text-center py-4">
+              <strong>你🚶🐎？</strong>
+            </h2>
+
+            <div class="card-body px-lg-5 pt-0">
+
+              <div class="md-form" style="color: #757575;">
+
+                <label for="name">君の名は</label>
+                <input type="text" id="name" class="form-control" placeholder="">
+              </div>
+              <div class="md-form" style="color: #757575;">
+                <select class="browser-default custom-select mb-4 initialized" id="gender">
+                  <option value="" disabled selected>自我认同性别</option>
+                  <option value="male">男</option>
+                  <option value="female">女</option>
+                  <option value="other">不能以二元分类方法分类</option>
+                </select>
+              </div>
+              <div class="md-form" style="color: #757575;">
+                <label for="userId">你学号多少</label>
+                <input type="number" id="userId" class="form-control" placeholder="">
+              </div>
+
+              <div class="md-form" style="color: #757575;">
+                <label for="classId">你班号多少</label>
+                <input type="text" id="classId" class="form-control" placeholder="">
+              </div>
+
+              <div class="md-form" style="color: #757575;">
+                <select class="browser-default custom-select mb-4 initialized" id="will">
+                  <option value="nil" disabled selected>你想🚶🐎？</option>
+                  <option value="nay">走不动</option>
+                  <option value="worrior">战士</option>
+                  <option value="mage">法师</option>
+                  <option value="periest">牧师</option>
+                </select>
+              </div>
+              <p id="info">
+              </p>
+              <div class="md-form" style="color: #757575;">
+                <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0"
+                  id="submit">就这样了</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="t2t" class="flex-center flex-column text-center ">
+        <div class=" table table-hover table-borderless table-responsive text-nowrap col-md-10 col-lg-8">
+
+          <table class="table" id="thetable">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">学号</th>
+                <th scope="col">名字</th>
+                <th scope="col">班级</th>
+                <th scope="col">性别</th>
+                <th scope="col">志愿</th>
+              </tr>
+            </thead>
+            <tbody id="tbody">
+            </tbody>
+          </table>
+
+        </div>
+      </div>
+    </div>
+    <!-- Start your project here-->
+
+    <!-- SCRIPTS -->
+    <!-- JQuery -->
+    <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="js/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="js/mdb.min.js"></script>
+    <script type="text/javascript">
+      const chkSpecial = (special) => {
+        if (typeof (special.userId) != 'number') return false;
+        if (!special.userId) return false;
+        if (typeof (special.name) != 'string') return false;
+        if (typeof (special.classId) != 'string') return false;
+        if (typeof (special.gender) != 'string') return false;
+        if (['male', 'female', 'other'].indexOf(special.gender) == -1) return false;
+        if (typeof (special.will) != 'string') return false;
+        if (['nay', 'worrior', 'mage', 'periest'].indexOf(special.will) == -1) return false;
+        return true;
+      }
+      var tr;
+      const trans = (x) => {
+        if (tr[x]) return tr[x];
+        return x;
+      }
+      const reload = async () => {
+        console.log(window.location.hash);
+        if (window.location.hash == "#result") {
+          let data = await $.get("/api/sign_up");
+          data.sort((a, b) => {
+            return a._id < b._id
+          })
+          console.log(data)
+          $("#tbody").html("");
+          for (cnt in data) {
+            $("#tbody").html($("#tbody").html() + `
+            <tr>
+              <th scope="row">${cnt*1+1}</th>
+              <td>${data[cnt].userId}</td>
+              <td>${data[cnt].name}</td>
+              <td>${data[cnt].classId}</td>
+              <td>${trans(data[cnt].gender)}</td>
+              <td>${trans(data[cnt].will)}</td></tr>
+            `)
+          }
+          $("#t1t").hide()
+          $("#t2t").show()
+        } else {
+
+          $("#t1t").show()
+          $("#t2t").hide()
+        }
+      }
+
+      $(document).ready(async () => {
+        tr = await $.get("/api/dictionary");
+        reload();
+        $("#submit").click(async () => {
+          console.log(222);
+          let req = {
+            userId: $("#userId").val() * 1,
+            name: $("#name").val(),
+            classId: $("#classId").val(),
+            gender: $("#gender").val(),
+            will: $("#will").val()
+          }
+          if (!chkSpecial(req)) {
+            $("#info").text("格式错误!");
+            return;
+          }
+          let {
+            ret,
+            status,
+            xhr
+          } = await new Promise((res, rej) => {
+            $.post("/api/sign_up", req, (data, status,
+              xhr) => res({
+              data,
+              status,
+              xhr
+            }))
+          });
+
+          console.log(ret);
+          if (xhr.status == 200 || xhr.status == 201)
+            window.location = "/#result"
+          else
+            $("#info").text(trans(ret.info));
+          reload();
+        });
+      });
+    </script>
+  </body>
+
+</html>
